@@ -1,17 +1,20 @@
 {
-  "name": "angular-seed",
+  "name": "tetries world",
   "private": true,
   "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
+  "description": "A wonderful tetris world constructed with angular.js",
+  "repository": "https://github.com/nianjie/tetrisworld",
   "license": "MIT",
   "devDependencies": {
-    "karma": "~0.10",
-    "protractor": "^1.1.1",
-    "http-server": "^0.6.1",
     "bower": "^1.3.1",
+    "http-server": "^0.6.1",
+    "karma": "^0.12.16",
+    "karma-jasmine": "^0.1.5",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "phantomjs": "1.9.8",
+    "protractor": "1.3.1",
     "shelljs": "^0.2.6",
-    "karma-junit-reporter": "^0.2.2"
+    "tmp": "0.0.23"
   },
   "scripts": {
     "postinstall": "bower install",

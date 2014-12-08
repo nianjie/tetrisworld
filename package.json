@@ -1,5 +1,5 @@
 {
-  "name": "tetries world",
+  "name": "tetries-world",
   "private": true,
   "version": "0.0.0",
   "description": "A wonderful tetris world constructed with angular.js",
@@ -23,8 +23,8 @@
     "start": "http-server -a localhost -p 8000 -c-1",
 
     "pretest": "npm install",
-    "test": "karma start karma.conf.js",
-    "test-single-run": "karma start karma.conf.js  --single-run",
+    "test": "node node_modules/karma/bin/karma start karma.conf.js",
+    "test-single-run": "node node_modules/karma/bin/karma start karma.conf.js  --single-run",
 
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",

@@ -89,6 +89,8 @@ angular.module('Game.Tetris', [
 	return new PieceType(this.pieceNum, this.x + 1, this.y, this.rotation);
     };
 
-    return PieceType;
+    return function(a,b,c,d){
+	return new PieceType(a,b,c,d)
+    };
 }])
 ;

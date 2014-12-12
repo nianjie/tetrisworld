@@ -3,7 +3,7 @@
 angular.module('Game.Tetris', [
 ])
 
-.value('Constants', new function(){
+.constant('Constants', new function(){
     var self = this;
     /**
      * Various constants related to board size / drawing.

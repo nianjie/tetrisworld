@@ -1,10 +1,18 @@
 'use strict';
 
 angular.module('Game.Tetris', [
+    'Game.Tetris.Board',
+    'Game.Tetris.Piece',
+    'Game.Tetris.Controller'
 ])
 
 .constant('Constants', new function(){
     var self = this;
+    /**
+     * Firebase related constants.
+     * It would be better if Firebase could be injected instead of invoking the global functions. 
+     */
+    self.rootRef = new Firebase("https://tetrisworld.firebaseio.com/");
     /**
      * Various constants related to board size / drawing.
      */
@@ -53,44 +61,4 @@ angular.module('Game.Tetris', [
     return self;
 }()
 )
-
-.factory('Piece', ['Constants', function(){
-      function PieceType(pieceNum, x, y, rotation) {
-	if (arguments.length > 0 ) {
-	    this.pieceNum = pieceNum;
-	    this.x = x;
-	    this.y = y;
-	    this.rotation = rotation;
-	} else {
-	    // Initialize new random piece.
-	    this.pieceNum = Math.floor(Math.random() * 7);
-	    this.x = 4;
-	    this.y = -2;
-	    this.rotation = 0;
-	}
-    };
-
-    PieceType.prototype.drop = function () {
-	return new PieceType(this.pieceNum, this.x, this.y + 1, this.rotation);
-    };
-
-
-    PieceType.prototype.rotate = function () {
-	return new PieceType(this.pieceNum, this.x, this.y, (this.rotation + 1) % 4);
-    };
-
-
-    PieceType.prototype.moveLeft = function () {
-	return new PieceType(this.pieceNum, this.x - 1, this.y, this.rotation);
-    };
-
-
-    PieceType.prototype.moveRight = function () {
-	return new PieceType(this.pieceNum, this.x + 1, this.y, this.rotation);
-    };
-
-    return function(a,b,c,d){
-	return new PieceType(a,b,c,d)
-    };
-}])
 ;

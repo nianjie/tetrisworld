@@ -4,7 +4,7 @@ angular.module('Game.Tetris.Piece', [
 
 ])
 
-.factory('Piece', ['Constants', function(){
+.factory('Piece', ['Constants','$firebase', function(){
       function PieceType(pieceNum, x, y, rotation) {
 	if (arguments.length > 0 ) {
 	    this.pieceNum = pieceNum;

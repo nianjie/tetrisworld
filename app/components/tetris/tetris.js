@@ -3,7 +3,8 @@
 angular.module('Game.Tetris', [
     'Game.Tetris.Board',
     'Game.Tetris.Piece',
-    'Game.Tetris.Controller'
+    'Game.Tetris.Controller',
+    'firebase'
 ])
 
 .constant('Constants', new function(){

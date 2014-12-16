@@ -7,6 +7,7 @@ angular.module('Game.Tetris.Board', [
 ;
 
 // sample
+var Tetris = {};
   /**
    * Stores the state of a tetris board and handles drawing it.
    */

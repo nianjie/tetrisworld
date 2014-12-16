@@ -3,15 +3,23 @@
 describe('Game.Tetris.Piece module', function() {
     beforeEach(module('Game.Tetris'));
 
-    describe('Piece service', function() {
-	it('should create instances of PieceType', function() {
-	    inject(function(Piece) {
-		var a = Piece(1,2,3,4), b = Piece(5,6,7,8);
+    describe('PieceType service', function() {
+	it('should provide type of PieceType', function() {
+	    inject(function(PieceType) {
+		var a = new PieceType(1,2,3,4), b = new PieceType(5,6,7,8);
 		expect(a.pieceNum).toBe(1);
 		expect(b.pieceNum).toBe(5);
 		expect(a.drop).toBeDefined();
 		expect(b.rotate).toBeDefined();
-		console.log(typeof a);
+		console.log(PieceType);
+	    });
+	});
+    });
+
+    describe('PieceFactory service', function() {
+	it('should provide piece factory service', function() {
+	    inject(function(PieceFactory) {
+		console.log(PieceFactory);
 	    });
 	});
     });

@@ -3,9 +3,8 @@
 angular.module('Game.Tetris.Piece', [
 
 ])
-
-.factory('Piece', ['Constants','$firebase', function(){
-      function PieceType(pieceNum, x, y, rotation) {
+.value('PieceType', function() {
+    function PieceType(pieceNum, x, y, rotation) {
 	if (arguments.length > 0 ) {
 	    this.pieceNum = pieceNum;
 	    this.x = x;
@@ -24,23 +23,28 @@ angular.module('Game.Tetris.Piece', [
 	return new PieceType(this.pieceNum, this.x, this.y + 1, this.rotation);
     };
 
-
     PieceType.prototype.rotate = function () {
 	return new PieceType(this.pieceNum, this.x, this.y, (this.rotation + 1) % 4);
     };
-
 
     PieceType.prototype.moveLeft = function () {
 	return new PieceType(this.pieceNum, this.x - 1, this.y, this.rotation);
     };
 
-
     PieceType.prototype.moveRight = function () {
 	return new PieceType(this.pieceNum, this.x + 1, this.y, this.rotation);
     };
+    
+    return PieceType;
+}()
+)
+.factory('PieceFactory', [
+    'Constants','PieceType', '$FirebaseObject', 
+    function(Constants, PieceType, $FirebaseObject){
+	var pieceFactory = $FirebaseObject.$extendFactory(PieceType, {
+	});
 
-    return function(a,b,c,d){
-	return new PieceType(a,b,c,d)
-    };
-}])
+	return pieceFactory;
+    }]
+)
 ;

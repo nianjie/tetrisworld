@@ -1,7 +1,5 @@
 <html>
 <head>
-  <script src="https://cdn.firebase.com/js/client/2.0.4/firebase.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/resources/tutorial/css/example.css">
 </head>
 
@@ -13,7 +11,8 @@
   <input type="button" id="restartButton" value="Restart Game" class="hide" />
   <div id="gameInProgress">Game is in progress.  You will automatically join if either player leaves.</div>
 
-
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script>
 
   var canvas = $("#canvas0").get(0);
@@ -21,7 +20,7 @@
     alert("You must use a browser that supports HTML5 Canvas to run this demo.");
 
   function start() {
-    var tetrisRef = new Firebase('https://rwnpnxmmiw2.firebaseio-demo.com/');
+    var tetrisRef = new Firebase('https://tetrisworld.firebaseio.com/');
     var tetrisController = new Tetris.Controller(tetrisRef);
   }
 
@@ -381,7 +380,7 @@
 
   Tetris.Controller.prototype.createBoards = function () {
     this.boards = [];
-    for(var i = 0; i <= 1; i++) {
+    for(var i = 0; i < 1; i++) {
       var playerRef = this.tetrisRef.child('player' + i);
       var canvas = $('#canvas' + i).get(0);
       this.boards.push(new Tetris.Board(canvas, playerRef));

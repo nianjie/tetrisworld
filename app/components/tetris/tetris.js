@@ -10,9 +10,10 @@ angular.module('Game.Tetris', [
     var self = this;
     /**
      * Firebase related constants.
-     * It would be better if Firebase could be injected instead of invoking the global functions. 
+     * It would be better if Firebase could be injected rather than defined in the global namespace. 
      */
-    self.rootRef = new Firebase("https://tetrisworld.firebaseio.com/");
+    self.rootURL = "https://tetrisworld.firebaseio.com/";
+    self.rootRef = new Firebase(self.rootURL);
     /**
      * Various constants related to board size / drawing.
      */

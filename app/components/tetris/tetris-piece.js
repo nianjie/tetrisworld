@@ -41,7 +41,23 @@ angular.module('Game.Tetris.Piece', [
 .factory('PieceFactory', [
     'Constants','PieceType', '$FirebaseObject', 
     function(Constants, PieceType, $FirebaseObject){
-	var pieceFactory = $FirebaseObject.$extendFactory(PieceType, {
+	var pieceFactory = $FirebaseObject.$extendFactory({
+	    drop: function() {
+		this.y = this.y + 1;
+		return this;
+	    },
+	    rotate: function() {
+		this.rotation = (this.rotation + 1) % 4;
+		return this;
+	    },
+	    moveLeft: function() {
+		this.x = this.x -1;
+		return this;
+	    },
+	    moveRight: function() {
+		this.x = this.x + 1;
+		return this;
+	    }
 	});
 
 	return pieceFactory;

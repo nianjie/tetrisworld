@@ -10,6 +10,14 @@
     <div class="row">
       <div class="col-md-12">
 	<pre>{{player0 | json}}</pre>
+	<pre>{{player0.piece.drop() | json}}</pre>
+	<pre>{{player0.piece.rotate() | json}}</pre>
       </div>
+    </div>
+    <div class="col-md-12">
+      <input type="button" ng-click="player0.rotate()" value="rotate">
+      <input type="button" ng-click="player0.drop()" value="drop">
+      <input type="button" ng-click="player0.moveLeft()" value="left">
+      <input type="button" ng-click="player0.moveRight()" value="right">
     </div>
   </div>

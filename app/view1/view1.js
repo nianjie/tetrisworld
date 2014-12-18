@@ -14,14 +14,11 @@ angular.module('myApp.view1', [
 }])
 
 .controller('View1Ctrl', [
-    '$firebase', 'Constants', 'PieceFactory', 
-    function($firebase, Constants, PieceFactory) {
+    'Piece', 
+    function(Piece) {
 	var self = this;
-	var player = 'player0', piece = 'piece';
-	var playerRef = Constants.rootRef.child(player).child(piece);
-	console.log(playerRef.toString());
-	this.piece = $firebase(playerRef, {objectFactory: 'PieceFactory'}).$asObject();
-	this.piece2 = $firebase(playerRef).$asObject();
+	var player = 'player0';
+	this.piece = Piece(player);
 	this.rotate = function() {
 	    this.piece && this.piece.rotate();
 	};

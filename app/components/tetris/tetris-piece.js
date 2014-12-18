@@ -63,4 +63,12 @@ angular.module('Game.Tetris.Piece', [
 	return pieceFactory;
     }]
 )
+.factory('Piece', [
+    '$firebase', 'Constants', 
+    function($firebase, Constants) {
+	return function(playerId) {
+	    return $firebase(Constants.rootRef.child(playerId).child('piece'), {objectFactory: 'PieceFactory'}).$asObject();
+	};
+    }]
+)
 ;

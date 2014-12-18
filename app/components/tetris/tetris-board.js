@@ -3,7 +3,37 @@
 angular.module('Game.Tetris.Board', [
 
 ])
-
+.factory('BoardFactory', [
+    '$FirebaseObject', 'Constants',
+    function($FirebaseObject, Constants) {
+	var boardFactory = $FirebaseObject.$extendFactory({
+	    $$updated: function(snap) {
+		var changed = $FirebaseObject.prototype.$$updated.apply(this, arguments);
+		this.draw();
+		return changed;
+	    },
+	    draw: function() { 
+		console.log("Board is drawing.");
+		this.context.clearRect(0, 0, Constants.BOARD_WIDTH_PIXELS, Constants.BOARD_HEIGHT_PIXELS);
+	    }
+	});
+	return boardFactory;
+    }]
+)
+.factory('Board', [
+    '$firebase', 'Constants', 'BoardFactory',
+    function($firebase, Constants, BoardFactory) {
+	return function(canvas, playerId) {
+	    var restStuff = {
+		_context: canvas.getContext('2d'),
+		_player: playerId
+	    };
+	    angular.extend(BoardFactory, restStuff);
+	    var boardRef = Constants.rootRef.child(playerId).child('board');
+	    return $firebase(boardRef, {objectFactory: 'BoardFactory'}).$asObject();
+	};
+    }]
+)
 ;
 
 // sample

@@ -4,38 +4,38 @@ var myDebug = {};
 myDebug.firebase = {
 
     injector: function() {
-	var $injector = angular.injector(['ng', 'firebaes']);
+	var $injector = angular.injector(['ng', 'firebase']);
 	return $injector;
     },
 
     di: function(diName) {
-	return injector().get(diName);
+	return this.injector().get(diName);
     },
 
     $fire: function() {
-	return di('$firebase');
+	return this.di('$firebase');
     },
 
     $fireUtil: function() {
-	return di('$firebaseUtils');
+	return this.di('$firebaseUtils');
     },
     
     syncObj: function(ref) {
 	try {
-	    $fireUtil().assertValidRef(ref);
+	    this.$fireUtil().assertValidRef(ref);
 	} catch (error) {
 	    ref = new Firebase(ref);
 	}
-	return $fire(ref).$asObject();
+	return this.$fire(ref).$asObject();
     },
 
     syncArry : function(ref) {
 	try {
-	    $fireUtil().assertValidRef(ref);
+	    this.$fireUtil().assertValidRef(ref);
 	} catch (error) {
 	    ref = new Firebase(ref);
 	}
-	return $fire(ref).$asArray();
+	return this.$fire(ref).$asArray();
     },
     _defIsEnd : true
 };

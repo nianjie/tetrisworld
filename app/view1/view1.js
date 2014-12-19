@@ -32,5 +32,10 @@ angular.module('myApp.view1', [
 	    this.piece.moveRight();
 	};
 	this.board = Board($("#canvas0").get(0), player);
+	this.start = function() {
+	    this.board.$loaded().then(function(self) {
+		self.draw();
+	    });
+	};
     }
 ]);

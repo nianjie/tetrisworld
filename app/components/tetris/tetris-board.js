@@ -16,7 +16,7 @@ angular.module('Game.Tetris.Board', [
 	    },
 	    draw: function() { 
 		console.log("Board is drawing.");
-		this.context.clearRect(0, 0, Constants.BOARD_WIDTH_PIXELS, Constants.BOARD_HEIGHT_PIXELS);
+		this._context.clearRect(0, 0, Constants.BOARD_WIDTH_PIXELS, Constants.BOARD_HEIGHT_PIXELS);
 		
 		// Iterate over board data
 		for (var x = 0; x < Constants.BOARD_WIDTH; x++) {
@@ -26,19 +26,19 @@ angular.module('Game.Tetris.Board', [
 			    // Calculate block position and draw a correctly-colored square.
 			    var left = x * Constants.BLOCK_SIZE_PIXELS;
 			    var top = y * Constants.BLOCK_SIZE_PIXELS;
-			    this.context.fillStyle = Constants.BLOCK_COLORS[colorValue];
-			    this.context.fillRect(left, top, Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS);
-			    this.context.lineWidth = 1;
-			    this.context.strokeStyle = Constants.BLOCK_BORDER_COLOR;
-			    this.context.strokeRect(left, top, Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS);
+			    this._context.fillStyle = Constants.BLOCK_COLORS[colorValue];
+			    this._context.fillRect(left, top, Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS);
+			    this._context.lineWidth = 1;
+			    this._context.strokeStyle = Constants.BLOCK_BORDER_COLOR;
+			    this._context.strokeRect(left, top, Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS);
 			}
 		    }
 		}
 
 		// If this isn't my board, dim it out with a 25% opacity black rectangle.
 		if (!this._isMyBoard) {
-		    this.context.fillStyle = "rgba(0, 0, 0, 0.25)";
-		    this.context.fillRect(0, 0, Tetris.BOARD_WIDTH_PIXELS, Tetris.BOARD_HEIGHT_PIXELS);
+		    this._context.fillStyle = "rgba(0, 0, 0, 0.25)";
+		    this._context.fillRect(0, 0, Tetris.BOARD_WIDTH_PIXELS, Tetris.BOARD_HEIGHT_PIXELS);
 		}
 	    },
 	    drawPiece: function() {

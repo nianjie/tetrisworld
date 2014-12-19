@@ -20,3 +20,8 @@
       <input type="button" ng-click="player0.start()" value="start">
     </div>
   </div>
+  <script>
+    var canvas = $("#canvas0").get(0);
+    if (!canvas || !canvas.getContext || !canvas.getContext('2d'))
+    alert("You must use a browser that supports HTML5 Canvas to run this demo.");
+  </script>

@@ -12,8 +12,8 @@ myDebug.firebase = {
 	return this.injector().get(diName);
     },
 
-    $fire: function() {
-	return this.di('$firebase');
+    $fire: function(ref) {
+	return this.di('$firebase')(ref);
     },
 
     $fireUtil: function() {

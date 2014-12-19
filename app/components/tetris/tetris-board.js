@@ -15,7 +15,80 @@ angular.module('Game.Tetris.Board', [
 	    draw: function() { 
 		console.log("Board is drawing.");
 		this.context.clearRect(0, 0, Constants.BOARD_WIDTH_PIXELS, Constants.BOARD_HEIGHT_PIXELS);
-	    }
+
+		// If this isn't my board, dim it out with a 25% opacity black rectangle.
+		if (!this._isMyBoard) {
+		    this.context.fillStyle = "rgba(0, 0, 0, 0.25)";
+		    this.context.fillRect(0, 0, Tetris.BOARD_WIDTH_PIXELS, Tetris.BOARD_HEIGHT_PIXELS);
+		}
+	    },
+	    drawPiece: function() {
+		var self = this;
+		this.forEachBlockOfPiece(piece, function(x, y, colorValue) {
+		    var left = x * Constants.BLOCK_SIZE_PIXELS;
+		    var top = y * Constants.BLOCK_SIZE_PIXELS;
+
+		    self.context.fillStyle = Constants.BLOCK_COLORS[colorValue];
+		    self.context.fillRect(left, top, Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS);
+		    self.context.lineWidth = 1;
+		    self.context.strokeStyle = Constants.BLOCK_BORDER_COLOR;
+		    self.context.strokeRect(left, top, Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS);
+		});
+	    },
+	    clear: function() {
+		for (var row = 0; row < Constants.BOARD_HEIGHT; row++) {
+		    this.setRow(row, Constants.EMPTY_LINE);
+		}
+	    },
+	    checkForPieceCollision: function() {
+		// to do
+	    },
+	    addLandedPiece: function() {
+		// to do
+	    },
+	    removeCompletedRows: function() {
+		// to do
+	    },
+	    addJunkRows: function() {
+		// to do
+	    },
+	    forEachBlockOfPiece: function (piece, fn, includeInvalid) {
+		for (var blockY = 0; blockY < 4; blockY++) {
+		    for (var blockX = 0; blockX < 4; blockX++) {
+			var colorValue = Constants.PIECES[piece.rotation][blockY][piece.pieceNum].charAt(blockX);
+			if (colorValue != ' ') {
+			    var x = piece.x + blockX, y = piece.y + blockY;
+			    if (includeInvalid || (x >= 0 && x < Constants.BOARD_WIDTH && y >= 0 && y < Constants.BOARD_HEIGHT)) {
+				fn(x, y, colorValue);
+			    }
+			}
+		    }
+		}
+	    },
+	    getRow: function (y) {
+		var row = (y < 10) ? ('0' + y) : ('' + y); // Pad row so they sort nicely in debugger. :-)
+
+		var rowContents = this[row];
+		return rowContents || Constants.EMPTY_LINE;
+	    },
+	    getBlockVal: function (x, y) {
+		return this.getRow(y).charAt(x);
+	    },
+
+	    setRow: function (y, rowContents) {
+		var row = (y < 10) ? ('0' + y) : ('' + y); // Pad row so they sort nicely in debugger. :-)
+
+		if (rowContents === Constants.EMPTY_LINE)
+		    rowContents = null; // delete empty lines so we get remove / added events in debugger. :-)
+
+		this[row] = rowContents;
+	    },
+	    setBlockVal: function (x, y, val) {
+		var rowContents = this.getRow(y);
+		rowContents = rowContents.substring(0, x) + val + rowContents.substring(x+1);
+		this.setRow(y, rowContents);
+	    },
+	    _isMyBoard: false
 	});
 	return boardFactory;
     }]

@@ -4,17 +4,36 @@ angular.module('Game.Tetris.Board', [
 
 ])
 .factory('BoardFactory', [
-    '$FirebaseObject', 'Constants',
-    function($FirebaseObject, Constants) {
-	var boardFactory = $FirebaseObject.$extendFactory({
+    '$FirebaseArray', 'Constants',
+    function($FirebaseArray, Constants) {
+	var boardFactory = $FirebaseArray.$extendFactory({
 	    $$updated: function(snap) {
-		var changed = $FirebaseObject.prototype.$$updated.apply(this, arguments);
-		this.draw();
+		var changed = $FirebaseArray.prototype.$$updated.apply(this, arguments);
+		if (changed) {
+		    this.draw();
+		};
 		return changed;
 	    },
 	    draw: function() { 
 		console.log("Board is drawing.");
 		this.context.clearRect(0, 0, Constants.BOARD_WIDTH_PIXELS, Constants.BOARD_HEIGHT_PIXELS);
+		
+		// Iterate over board data
+		for (var x = 0; x < Constants.BOARD_WIDTH; x++) {
+		    for (var y = 0; y < Constants.BOARD_HEIGHT; y++) {
+			var colorValue = this.getBlockVal(x, y);
+			if (colorValue != ' ') {
+			    // Calculate block position and draw a correctly-colored square.
+			    var left = x * Constants.BLOCK_SIZE_PIXELS;
+			    var top = y * Constants.BLOCK_SIZE_PIXELS;
+			    this.context.fillStyle = Constants.BLOCK_COLORS[colorValue];
+			    this.context.fillRect(left, top, Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS);
+			    this.context.lineWidth = 1;
+			    this.context.strokeStyle = Constants.BLOCK_BORDER_COLOR;
+			    this.context.strokeRect(left, top, Constants.BLOCK_SIZE_PIXELS, Constants.BLOCK_SIZE_PIXELS);
+			}
+		    }
+		}
 
 		// If this isn't my board, dim it out with a 25% opacity black rectangle.
 		if (!this._isMyBoard) {
@@ -69,6 +88,7 @@ angular.module('Game.Tetris.Board', [
 		var row = (y < 10) ? ('0' + y) : ('' + y); // Pad row so they sort nicely in debugger. :-)
 
 		var rowContents = this[row];
+		console.log("getRow(" + y + "):" + rowContents);
 		return rowContents || Constants.EMPTY_LINE;
 	    },
 	    getBlockVal: function (x, y) {
@@ -80,7 +100,7 @@ angular.module('Game.Tetris.Board', [
 
 		if (rowContents === Constants.EMPTY_LINE)
 		    rowContents = null; // delete empty lines so we get remove / added events in debugger. :-)
-
+		console.log("setRow(" + row + "," + rowContents + ")");
 		this[row] = rowContents;
 	    },
 	    setBlockVal: function (x, y, val) {

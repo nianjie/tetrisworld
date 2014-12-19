@@ -14,8 +14,8 @@ angular.module('myApp.view1', [
 }])
 
 .controller('View1Ctrl', [
-    'Piece', 
-    function(Piece) {
+    'Piece', 'Board', 
+    function(Piece, Board) {
 	var self = this;
 	var player = 'player0';
 	this.piece = Piece(player);
@@ -31,5 +31,6 @@ angular.module('myApp.view1', [
 	this.moveRight = function() {
 	    this.piece.moveRight();
 	};
+	this.board = Board($("#canvas0").get(0), player);
     }
 ]);

@@ -123,7 +123,7 @@ angular.module('Game.Tetris.Board', [
 	    };
 	    angular.extend(BoardFactory, restStuff);
 	    var boardRef = Constants.rootRef.child(playerId).child('board');
-	    return $firebase(boardRef, {objectFactory: 'BoardFactory'}).$asObject();
+	    return $firebase(boardRef, {arrayFactory: 'BoardFactory'}).$asArray();
 	};
     }]
 )

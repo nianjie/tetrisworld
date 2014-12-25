@@ -6,7 +6,21 @@ angular.module('Game.Tetris.Board', [
 .factory('BoardFactory', [
     '$FirebaseArray', 'Constants',
     function($FirebaseArray, Constants) {
-	var boardFactory = $FirebaseArray.$extendFactory({
+	var boardFactory = $FirebaseArray.$extendFactory(
+	    function($firebase, destroyFunction, readyPromise) {
+		this._context = {
+		    clearRect: function() { this._log("clearRect");},
+		    fillStyle: true,
+		    fillRect: function() { this._log("fillRect");},
+		    lineWidth: 0,
+		    strokeStyle: 0,
+		    strokeRect: function() { this._log("strokeRect");},
+		    _log: function(name) { console.log("dummy:" + name);},
+		    _defineEnded: true
+		};
+		return $FirebaseArray.call(this, $firebase, destroyFunction, readyPromise);
+	    }, 
+	    {
 	    $$updated: function(snap) {
 		var changed = $FirebaseArray.prototype.$$updated.apply(this, arguments);
 		if (changed) {

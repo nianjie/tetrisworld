@@ -8,16 +8,7 @@ angular.module('Game.Tetris.Board', [
     function($FirebaseArray, Constants) {
 	var boardFactory = $FirebaseArray.$extendFactory(
 	    function($firebase, destroyFunction, readyPromise) {
-		this._context = {
-		    clearRect: function() { this._log("clearRect");},
-		    fillStyle: true,
-		    fillRect: function() { this._log("fillRect");},
-		    lineWidth: 0,
-		    strokeStyle: 0,
-		    strokeRect: function() { this._log("strokeRect");},
-		    _log: function(name) { console.log("dummy:" + name);},
-		    _defineEnded: true
-		};
+		this._context = $("#canvas0").get(0).getContext('2d');
 		return $FirebaseArray.call(this, $firebase, destroyFunction, readyPromise);
 	    }, 
 	    {
@@ -101,7 +92,7 @@ angular.module('Game.Tetris.Board', [
 	    getRow: function (y) {
 		var row = (y < 10) ? ('0' + y) : ('' + y); // Pad row so they sort nicely in debugger. :-)
 
-		var rowContents = this[row];
+		var rowContents = this.$list[y];
 		console.log("getRow(" + y + "):" + rowContents);
 		return rowContents || Constants.EMPTY_LINE;
 	    },

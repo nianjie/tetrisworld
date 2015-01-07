@@ -92,7 +92,7 @@ angular.module('Game.Tetris.Board', [
 	    getRow: function (y) {
 		var row = (y < 10) ? ('0' + y) : ('' + y); // Pad row so they sort nicely in debugger. :-)
 
-		var rowContents = this.$list[y];
+		var rowContents = this.$list[y] && this.$list[y].$value;
 		console.log("getRow(" + y + "):" + rowContents);
 		return rowContents || Constants.EMPTY_LINE;
 	    },

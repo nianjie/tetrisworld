@@ -33,8 +33,8 @@ angular.module('myApp.view1', [
 	};
 	this.board = Board($("#canvas0").get(0), player);
 	this.start = function() {
-	    this.board.$loaded().then(function(self) {
-		self.draw();
+	    this.board.$loaded().then(function(b) {
+		b.draw();
 	    });
 	};
     }

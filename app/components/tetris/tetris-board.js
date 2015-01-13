@@ -12,6 +12,8 @@ angular.module('Game.Tetris.Board', [
 		return $FirebaseArray.call(this, $firebase, destroyFunction, readyPromise);
 	    }, 
 	    {
+	    // unfortunately `this' keyword in all functions refers to the array factory (i.e. $FirebaseArray object, which is extended by this invocation) rather than the array itself. The reason is when the array is being extended `this' is set to the factory itself with Function.prototype.bind() method, which will create a new function with `this' fixed to a given value regardless how the new function will be called.
+	    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
 	    $$updated: function(snap) {
 		var changed = $FirebaseArray.prototype.$$updated.apply(this, arguments);
 		if (changed) {
@@ -122,12 +124,12 @@ angular.module('Game.Tetris.Board', [
     '$firebase', 'Constants', 'BoardFactory',
     function($firebase, Constants, BoardFactory) {
 	return function(canvas, playerId) {
-	    var restStuff = {
+/*	    var restStuff = {
 		_context: canvas.getContext('2d'),
 		_player: playerId
 	    };
 	    angular.extend(BoardFactory, restStuff);
-	    var boardRef = Constants.rootRef.child(playerId).child('board');
+*/	    var boardRef = Constants.rootRef.child(playerId).child('board');
 	    return $firebase(boardRef, {arrayFactory: 'BoardFactory'}).$asArray();
 	};
     }]

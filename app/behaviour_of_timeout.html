@@ -45,6 +45,12 @@
     return seed;
     }
   </script>
+  <script>
+    setTimeout(function() {
+    console.log("world!");
+    }, 0); // this line will be not executed before the following line even given 0 parameter.
+    console.log("Hello ");
+  </script>
 </head>
 <body>
 

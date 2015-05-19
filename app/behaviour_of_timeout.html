@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Tetris World</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="app.css">
+  <script>
+    var resultA, resultB;
+
+    resultA = doIt(6);
+
+    function setResultB(val) {
+    resultB = val;
+    }
+
+    function doIt(seed) {
+    var timeoutA, timeoutB;
+    console.log('seed = ' + seed);
+    timeoutA = setTimeout(function() {
+    seed /= 4;
+
+    setResultB(seed);
+    return seed;
+    }, 0);
+
+    timeoutB = setTimeout(function() {
+    seed *= 4;
+
+    clearTimeout(timeoutA);
+
+    setResultB(seed);
+    return seed;
+    }, 0);
+
+    clearTimeout(timeoutB);
+
+    seed += 2;
+
+    setResultB(seed);
+    return seed;
+    }
+  </script>
+</head>
+<body>
+
+</body>
+</html>
